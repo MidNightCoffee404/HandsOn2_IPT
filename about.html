@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: bisque;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: green;
+            text-align: center;
+            margin-top: 50px;
+            font-size: 36px;
+        }
+
+        nav {
+            background-color: green;
+            padding: 15px;
+        }
+
+        ul {
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        li {
+            margin: 0 20px;
+        }
+
+        li a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        li a:hover {
+            color: black;
+        }
+
+        .social-media-links {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .social-media-links a {
+            margin: 0 15px;
+            font-size: 24px;
+            color: #3b5998; /* Facebook color */
+            transition: color 0.3s;
+        }
+
+        .social-media-links a:hover {
+            color: #f39c12;
+        }
+
+        .section {
+            margin: 40px 0;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .section h2 {
+            font-size: 28px;
+            color: #2980b9;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        iframe {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        #map iframe {
+            height: 400px;
+        }
+
+        #youtube iframe {
+            height: 500px;
+        }
+
+        #weather {
+            margin: 40px auto;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            li {
+                margin: 10px 0;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+
+            .social-media-links a {
+                font-size: 20px;
+            }
+
+            iframe {
+                height: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="home.html">HOME</a></li>
+            <li><a href="carousel.html">CAROUSEL</a></li>
+            <li><a href="gallery.html">GALLERY</a></li>
+            <li><a href="news.html">NEWS</a></li>
+            <li><a href="about.html">ABOUT US</a></li>
+        </ul>
+    </nav>
+
+    <h1>ABOUT US</h1>
+
+    <!-- Social Media Links -->
+    <div class="social-media-links">
+        <a href="https://facebook.com" target="_blank" title="Follow us on Facebook">Facebook</a>
+        <a href="https://twitter.com" target="_blank" title="Follow us on Twitter">Twitter</a>
+        <a href="https://instagram.com" target="_blank" title="Follow us on Instagram">Instagram</a>
+    </div>
+
+    <!-- Weather Section -->
+    <div class="section" id="weather">
+        <h2>Current Weather</h2>
+        <div id="ww_fa3f67075e89c" v='1.3' loc='auto' a='{"t":"horizontal","lang":"en","sl_lpl":1,"ids":["wl5198"],"font":"Arial","sl_ics":"one_a","sl_sot":"celsius","cl_bkg":"image","cl_font":"#FFFFFF","cl_cloud":"#FFFFFF","cl_persp":"#81D4FA","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722"}'>More forecasts: <a href="https://oneweather.org/orlando/30_days/" id="ww_fa3f67075e89c_u" target="_blank">30 day weather Orlando</a></div>
+        <script async src="https://app3.weatherwidget.org/js/?id=ww_fa3f67075e89c"></script>
+    </div>
+
+    <!-- Google Maps Section -->
+    <div class="section" id="map">
+        <h2>Location</h2>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3863.4552704476105!2d120.95914621105577!3d14.45852730532776!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397cd9273416e43%3A0x96542d86e50a4106!2sSt.%20Dominic%20College%20of%20Asia!5e0!3m2!1sen!2sph!4v1738937427190!5m2!1sen!2sph" loading="lazy"></iframe>
+    </div>
+
+    <!-- YouTube Video Section -->
+    <div class="section" id="youtube">
+        <h2>YouTube Video</h2>
+        <iframe src="https://www.youtube.com/embed/ZHgyQGoeaB0" title="OIIAOIIA CAT but in 4K (Not Actually)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+
+    <!-- Google Calendar Section -->
+    <div class="section" id="google-calendar">
+        <h2>Google Calendar</h2>
+        <iframe src="https://calendar.google.com/calendar/embed?src=your_calendar_id&ctz=Your_Timezone" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+    </div>
+
+</body>
+
+</html>

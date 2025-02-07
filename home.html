@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: bisque;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: green;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        nav {
+            background-color: green;
+            padding: 10px;
+        }
+
+        ul {
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        li {
+            margin: 0 20px;
+        }
+
+        li a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+        }
+
+        li a:hover {
+            color: black;
+        }
+
+        .content {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .intro {
+            font-size: 20px;
+            color: darkgreen;
+            margin: 20px 0;
+        }
+
+        .cta {
+            font-size: 22px;
+            color: darkblue;
+            margin-top: 30px;
+        }
+
+        .cta a {
+            text-decoration: none;
+            color: white;
+            background-color: green;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        .cta a:hover {
+            background-color: darkgreen;
+        }
+
+        @media (max-width: 768px) {
+            ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            li {
+                margin: 10px 0;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .intro {
+                font-size: 18px;
+            }
+
+            .cta {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="home.html">HOME</a></li>
+            <li><a href="carousel.html">CAROUSEL</a></li>
+            <li><a href="gallery.html">GALLERY</a></li>
+            <li><a href="news.html">NEWS</a></li>
+            <li><a href="about.html">ABOUT US</a></li>
+        </ul>
+    </nav>
+
+    <h1>Welcome the Website</h1>
+
+    <div class="content">
+        <p class="intro">Im delighted to have you here. Explore the site and discover exciting features like my image carousel, gallery, and latest news!</p>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carousel</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: bisque;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            background-color: green;
+            padding: 10px;
+        }
+
+        ul {
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        li {
+            margin: 0 20px;
+        }
+
+        li a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+        }
+
+        li a:hover {
+            color: black;
+        }
+
+        .carousel {
+            max-width: 600px;
+            margin: 50px auto;
+            overflow: hidden;
+            position: relative;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .carousel-images {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-images img {
+            width: 100%;
+            height: auto;
+            flex-shrink: 0;
+        }
+
+        .carousel-buttons {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+
+        .carousel-buttons button {
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 50%;
+        }
+
+        .carousel-buttons button:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .carousel-indicators {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .carousel-indicators span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            margin: 5px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .carousel-indicators .active {
+            background-color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="home.html">HOME</a></li>
+            <li><a href="carousel.html">CAROUSEL</a></li>
+            <li><a href="gallery.html">GALLERY</a></li>
+            <li><a href="news.html">NEWS</a></li>
+            <li><a href="about.html">ABOUT US</a></li>
+        </ul>
+    </nav>
+
+    <h1 style="text-align: center; color: green;">CAROUSEL</h1>
+
+    <div class="carousel">
+        <div class="carousel-images">
+            <img src="image/carousel/snake.png" alt="Slide 7"> <!-- Duplicate last slide -->
+            <img src="image/carousel/boar.png" alt="Slide 1">
+            <img src="image/carousel/dragon.png" alt="Slide 2">
+            <img src="image/carousel/fox.png" alt="Slide 3">
+            <img src="image/carousel/goat.png" alt="Slide 4">
+            <img src="image/carousel/grizzlybear.png" alt="Slide 5">
+            <img src="image/carousel/lion.png" alt="Slide 6">
+            <img src="image/carousel/snake.png" alt="Slide 7">
+            <img src="image/carousel/boar.png" alt="Slide 1"> <!-- Duplicate first slide -->
+        </div>
+        <div class="carousel-buttons">
+            <button id="prev">❮</button>
+            <button id="next">❯</button>
+        </div>
+        <div class="carousel-indicators"></div>
+    </div>
+
+    <script>
+        const carouselImages = document.querySelector('.carousel-images');
+        const images = document.querySelectorAll('.carousel-images img');
+        const prevButton = document.getElementById('prev');
+        const nextButton = document.getElementById('next');
+        const indicatorsContainer = document.querySelector('.carousel-indicators');
+
+        let index = 1; // Start with the first real image (skip duplicate last)
+        const totalImages = images.length - 2; // Exclude duplicated slides
+        const intervalTime = 3000; // Auto-rotate every 3 seconds
+        let autoPlay;
+
+        // Add indicators dynamically
+        for (let i = 0; i < totalImages; i++) {
+            const dot = document.createElement('span');
+            dot.dataset.index = i + 1;
+            if (i === 0) dot.classList.add('active');
+            indicatorsContainer.appendChild(dot);
+        }
+
+        const indicators = document.querySelectorAll('.carousel-indicators span');
+
+        // Update carousel position
+        function updateCarousel() {
+            carouselImages.style.transform = `translateX(${-index * 100}%)`;
+            updateIndicators();
+        }
+
+        // Update indicators
+        function updateIndicators() {
+            indicators.forEach(dot => dot.classList.remove('active'));
+            indicators[index - 1].classList.add('active');
+        }
+
+        // Handle buttons
+        prevButton.addEventListener('click', () => {
+            clearInterval(autoPlay);
+            index = (index > 0) ? index - 1 : totalImages;
+            updateCarousel();
+            restartAutoPlay();
+        });
+
+        nextButton.addEventListener('click', () => {
+            clearInterval(autoPlay);
+            index = (index < totalImages + 1) ? index + 1 : 1;
+            updateCarousel();
+            restartAutoPlay();
+        });
+
+        // Handle indicators
+        indicators.forEach(dot => {
+            dot.addEventListener('click', (e) => {
+                clearInterval(autoPlay);
+                index = parseInt(e.target.dataset.index);
+                updateCarousel();
+                restartAutoPlay();
+            });
+        });
+
+        // Auto play
+        function startAutoPlay() {
+            autoPlay = setInterval(() => {
+                nextButton.click();
+            }, intervalTime);
+        }
+
+        function restartAutoPlay() {
+            startAutoPlay();
+        }
+
+        // Transition end event for looping
+        carouselImages.addEventListener('transitionend', () => {
+            if (index === 0) {
+                index = totalImages;
+                carouselImages.style.transition = 'none';
+                updateCarousel();
+            } else if (index === totalImages + 1) {
+                index = 1;
+                carouselImages.style.transition = 'none';
+                updateCarousel();
+            } else {
+                carouselImages.style.transition = 'transform 0.5s ease-in-out';
+            }
+        });
+
+        // Start everything
+        carouselImages.style.transition = 'transform 0.5s ease-in-out';
+        updateCarousel();
+        startAutoPlay();
+    </script>
+</body>
+
+</html>
