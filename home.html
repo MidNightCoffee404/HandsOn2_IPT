@@ -5,23 +5,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <script src="footer.js" defer></script>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: bisque;
+        /* Basic reset and styling */
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', Courier, monospace; /* Monospace for hacker feel */
+            background-color: black; /* Dark background */
+            color: #33FF33; /* Neon green text color */
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
         }
 
         h1 {
-            color: green;
             text-align: center;
             margin-top: 50px;
+            font-size: 36px;
+            color: #00FF00; /* Bright green for title */
+            text-transform: uppercase;
+            letter-spacing: 5px;
         }
 
         nav {
-            background-color: green;
-            padding: 10px;
+            background-color: #111; /* Dark background for nav */
+            padding: 15px;
+            text-align: center;
         }
 
         ul {
@@ -38,41 +52,50 @@
 
         li a {
             text-decoration: none;
-            color: white;
+            color: #33FF33; /* Neon green links */
             font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 2px;
         }
 
         li a:hover {
-            color: black;
+            color: #3e0eec; /* Bright green on hover */
         }
 
         .content {
             text-align: center;
             margin-top: 50px;
+            z-index: 1;
+            position: relative;
         }
 
         .intro {
             font-size: 20px;
-            color: darkgreen;
+            color: #33FF33;
             margin: 20px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .cta {
             font-size: 22px;
-            color: darkblue;
+            color: #00FF00;
             margin-top: 30px;
         }
 
         .cta a {
             text-decoration: none;
-            color: white;
-            background-color: green;
+            color: black;
+            background-color: #33FF33;
             padding: 10px 20px;
             border-radius: 5px;
+            font-weight: bold;
+            letter-spacing: 2px;
         }
 
         .cta a:hover {
-            background-color: darkgreen;
+            background-color: #00FF00;
+            color: black;
         }
 
         @media (max-width: 768px) {
@@ -86,7 +109,7 @@
             }
 
             h1 {
-                font-size: 24px;
+                font-size: 28px;
             }
 
             .intro {
@@ -97,11 +120,34 @@
                 font-size: 20px;
             }
         }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Canvas styling for Matrix effect */
+        #bgCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
     </style>
 </head>
 
 <body>
 
+    <!-- Navigation bar -->
     <nav>
         <ul>
             <li><a href="home.html">HOME</a></li>
@@ -112,12 +158,131 @@
         </ul>
     </nav>
 
-    <h1>Welcome the Website</h1>
+    <!-- Main content -->
+    <h1>Welcome to the Digital Underground</h1>
 
     <div class="content">
-        <p class="intro">Im delighted to have you here. Explore the site and discover exciting features like my image carousel, gallery, and latest news!</p>
+        <p class="intro">System online. Initiating interface...</p>
+        <p class="intro">Ready to navigate the matrix? Proceed with caution.</p>
+        <div class="cta">
+            <a href="gallery.html">Access the Core</a>
+        </div>
     </div>
 
+    <!-- Background canvas for matrix effect -->
+    <canvas id="bgCanvas"></canvas>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <script>
+        const langs = [
+            "Hello World", "مرحبا بالعالم", "Salam Dünya", "Прывітанне Сусвет", "Здравей свят", "ওহে বিশ্ব",
+            "Zdravo svijete", "Hola món", "Kumusta Kalibutan", "Ahoj světe", "Helo Byd", "Hej Verden",
+            "Hallo Welt", "Γειά σου Κόσμε", "Hello World", "Hello World", "Hola Mundo", "Tere, Maailm",
+            "Kaixo Mundua", "سلام دنیا", "Hei maailma", "Bonjour le monde", "Dia duit an Domhan", "Ola mundo",
+            "હેલો વર્લ્ડ", "Sannu Duniya", "नमस्ते दुनिया", "Hello World", "Pozdrav svijete", "Bonjou Mondyal la",
+            "Helló Világ", "Բարեւ աշխարհ", "Halo Dunia", "Ndewo Ụwa", "Halló heimur", "Ciao mondo", "שלום עולם",
+            "こんにちは世界", "Hello World", "Გამარჯობა მსოფლიო", "Сәлем Әлем", "សួស្តី​ពិភពលោក", "ಹಲೋ ವರ್ಲ್ಡ್",
+            "안녕하세요 월드", "Ciao mondo", "ສະ​ບາຍ​ດີ​ຊາວ​ໂລກ", "Labas pasauli", "Sveika pasaule", "Hello World",
+            "Kia Ora", "Здраво свету", "ഹലോ വേൾഡ്", "Сайн уу", "हॅलो वर्ल्ड", "Hai dunia", "Hello dinja",
+            "မင်္ဂလာပါကမ္ဘာလောက", "नमस्कार संसार", "Hallo Wereld", "Hei Verden", "Moni Dziko Lapansi",
+            "ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ ਦੁਨਿਆ", "Witaj świecie", "Olá Mundo", "Salut Lume", "Привет, мир", "හෙලෝ වර්ල්ඩ්",
+            "Ahoj svet", "Pozdravljen, svet", "Waad salaaman tihiin", "Përshendetje Botë", "Здраво Свете",
+            "Lefatše Lumela", "Halo Dunya", "Hej världen", "Salamu, Dunia", "ஹலோ வேர்ல்ட்", "హలో వరల్డ్",
+            "Салом Ҷаҳон", "สวัสดีชาวโลก", "Kamusta Mundo", "Selam Dünya", "Привіт Світ", "ہیلو ورلڈ",
+            "Salom Dunyo", "Chào thế giới", "העלא וועלט", "Mo ki O Ile Aiye", "你好，世界", "你好，世界", "你好，世界",
+            "Sawubona Mhlaba"
+        ];
+        
+        let charSize = 18;
+        let fallRate = charSize / 2;
+        let streams;
+
+        class Char {
+            constructor(value, x, y, speed) {
+                this.value = value;
+                this.x = x;
+                this.y = y;
+                this.speed = speed * 3;
+            }
+
+            draw() {
+                const flick = random(100);
+                if (flick < 10) {
+                    fill(120, 30, 100);
+                    text(round(random(9)), this.x, this.y);
+                } else {
+                    text(this.value, this.x, this.y);
+                }
+
+                this.y = this.y > height ? 0 : this.y + this.speed;
+            }
+        }
+
+        class Stream {
+            constructor(text, x) {
+                const y = random(text.length * 4);
+                const speed = random(2, 10);
+                this.chars = [];
+
+                for (let i = text.length; i >= 0; i--) {
+                    this.chars.push(
+                        new Char(text[i], x, (y + text.length - i) * charSize, speed)
+                    );
+                }
+            }
+
+            draw() {
+                fill(120, 100, 100);
+                this.chars.forEach((c, i) => {
+                    const lit = random(100);
+                    if (lit < 30) {
+                        if (i === this.chars.length - 1) {
+                            fill(120, 30, 100);
+                        } else {
+                            fill(120, 100, 90);
+                        }
+                    }
+
+                    c.draw();
+                });
+            }
+        }
+
+        function createStreams() {
+            for (let i = 0; i < width; i += charSize) {
+                streams.push(new Stream(random(langs), i));
+            }
+        }
+
+        function reset() {
+            streams = [];
+            createStreams();
+        }
+
+        function setup() {
+            const canvas = createCanvas(innerWidth, innerHeight);
+            canvas.id('bgCanvas');
+            reset();
+            frameRate(60);
+            colorMode(HSB);
+            noStroke();
+            textSize(charSize);
+            textFont("monospace");
+            background(0);
+        }
+
+        function draw() {
+            background(0, 0.4);
+            streams.forEach((s) => s.draw());
+        }
+
+        function windowResized() {
+            resizeCanvas(innerWidth, innerHeight);
+            background(0);
+            reset();
+        }
+    </script>
+    <div id="footer-container"></div>
 </body>
 
 </html>
